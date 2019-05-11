@@ -1,4 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import ListItem from './ListItem/ListItem';
+import Pagination from '../Pagination/Pagination';
 import Loading from '../Loading/Loading';
 import { API_URL } from '../../utils/API';
 import {
@@ -8,9 +10,12 @@ import {
   TableTh,
   TableBody
 } from '../styles/styles';
-import ListItem from './ListItem/ListItem';
 
 export default () => {
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currencies, setCurrencies] = useState([]);
+  const [error, setError] = useState(null);
   useEffect(() => {
     (async function() {
       try {
@@ -26,15 +31,21 @@ export default () => {
         setLoading(false);
       }
     })();
-  }, []);
-
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currencies, setCurrencies] = useState([]);
-  const [error, setError] = useState(null);
+  }, [currentPage]);
 
   if (loading) {
     return <Loading />;
+  }
+
+  function handleCurrentPage(page) {
+    console.log(page);
+    if (currentPage === 0 && page === 'next') {
+      return;
+    } else if (page === 'next') {
+      return setCurrentPage(currentPage + 1);
+    } else {
+      return setCurrentPage(currentPage - 1);
+    }
   }
 
   return (
@@ -54,6 +65,10 @@ export default () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <Pagination
+        currentPage={currentPage}
+        handleCurrentPage={next => handleCurrentPage(next)}
+      />
     </Fragment>
   );
 };

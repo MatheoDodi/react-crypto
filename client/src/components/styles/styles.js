@@ -93,4 +93,31 @@ export const Dollar = styled.span`
   margin-right: 6px;
 `;
 
-export const PaginationContainer = styled.div``;
+export const PaginationContainer = styled.div`
+  margin: 50px auto;
+  text-align: center;
+`;
+
+export const PaginationButton = styled.button`
+  text-align: center;
+  border: none;
+  border-radius: 16px;
+  background-color: #4997e5;
+  transition: background-color 0.2s;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+  width: 44px;
+  height: 34px;
+
+  :hover {
+    background-color: #457cb2;
+  }
+
+  :disabled {
+    background-color: #1f364d;
+    cursor: not-allowed;
+  }
+`;
+
+export const PaginationInfo = styled;
