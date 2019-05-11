@@ -5,3 +5,4 @@ export const SET_LOADING = 'SET_LOADING';
 export const UNSET_LOADING = 'UNSET_LOADING';
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const FILTER_CURRENCIES = 'FILTER_CURRENCIES';

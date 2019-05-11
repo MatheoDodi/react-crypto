@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useReducer, Fragment } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  Fragment,
+  useContext
+} from 'react';
 import context, { initialState } from '../../store/store';
 import ListItem from './ListItem/ListItem';
 import Pagination from '../Pagination/Pagination';
@@ -18,15 +24,24 @@ import reducer, {
   showModal
 } from '../../store/reducer';
 import DetailedItem from '../DetailedItem/DetailedItem';
+import Search from '../Search/Search';
 
 export default () => {
-  const [
-    { loading, currentPage, currencies, showDetailedModal, currencySelected },
-    dispatch
-  ] = useReducer(reducer, initialState);
+  const {
+    currentPage,
+    currencies,
+    showDetailedModal,
+    currencySelected,
+    loading,
+    nextPage,
+    prevPage,
+    setCurrencies,
+    closeModal,
+    showModal
+  } = useContext(context);
 
   useEffect(() => {
-    setCurrencies(dispatch, currentPage);
+    setCurrencies();
   }, [currentPage]);
 
   if (loading) {
@@ -35,38 +50,23 @@ export default () => {
 
   return (
     <Fragment>
-      <context.Provider
-        value={{
-          currentPage: currentPage,
-          showDetailedModal,
-          currencySelected,
-          nextPage: () => setNextPage(dispatch),
-          prevPage: () => setPrevPage(dispatch),
-          closeModal: () => closeModal(dispatch),
-          showModal: () => showModal(dispatch)
-        }}
-      >
-        {showDetailedModal && <DetailedItem />}
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <tr>
-                <TableTh>Cryptocurrency</TableTh>
-                <TableTh>Price</TableTh>
-                <TableTh>Market Cap</TableTh>
-                <TableTh>24H Change</TableTh>
-              </tr>
-            </TableHead>
-            <TableBody>
-              <ListItem
-                currencies={currencies}
-                showModal={id => showModal(dispatch, id)}
-              />
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Pagination currentPage={currentPage} />
-      </context.Provider>
+      {showDetailedModal && <DetailedItem />}
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <tr>
+              <TableTh>Cryptocurrency</TableTh>
+              <TableTh>Price</TableTh>
+              <TableTh>Market Cap</TableTh>
+              <TableTh>24H Change</TableTh>
+            </tr>
+          </TableHead>
+          <TableBody>
+            <ListItem currencies={currencies} showModal={id => showModal(id)} />
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Pagination currentPage={currentPage} />
     </Fragment>
   );
 };

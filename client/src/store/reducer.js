@@ -5,7 +5,8 @@ import {
   SET_LOADING,
   UNSET_LOADING,
   SHOW_MODAL,
-  CLOSE_MODAL
+  CLOSE_MODAL,
+  FILTER_CURRENCIES
 } from './types';
 import { API_URL } from '../utils/API';
 
@@ -22,6 +23,12 @@ let reducer = (state, action) => {
         currentPage: state.currentPage - 1
       };
     case SET_CURRENCIES:
+      return {
+        ...state,
+        currencies: action.payload,
+        filteredCurrencies: action.payload
+      };
+    case FILTER_CURRENCIES:
       return {
         ...state,
         currencies: action.payload
@@ -85,6 +92,13 @@ export const setCurrencies = async (dispatch, currentPage) => {
 
   dispatch({
     type: SET_CURRENCIES,
+    payload: currencies
+  });
+};
+
+export const filterCurrencies = (dispatch, currencies) => {
+  dispatch({
+    type: FILTER_CURRENCIES,
     payload: currencies
   });
 };

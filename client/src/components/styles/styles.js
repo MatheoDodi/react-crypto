@@ -27,12 +27,12 @@ export const Loading = styled.div`
 
 export const Header = styled.nav`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #0f273d;
   width: 100%;
-  height: 80px;
+  padding: 1rem;
 `;
 
 export const Logo = styled.img`
@@ -193,6 +193,31 @@ export const SearchContainer = styled.div`
   position: relative;
   width: 30%;
   height: 35px;
-  margin: 0 auto;
+  margin: 0 0;
   padding: 0 20px;
+
+  @media screen and (max-width: 700px) {
+    width: 100%;
+  }
+`;
+
+export const SearchInput = styled.input`
+  box-sizing: border-box;
+  background-color: #1f364d;
+  border-radius: 4px;
+  border: 0;
+  padding-left: 35px;
+  color: white;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  width: 100%;
+  height: 35px;
+
+  ::placeholder {
+    color: #9cb3c9;
+  }
+
+  :focus {
+    opacity: 1;
+  }
 `;
