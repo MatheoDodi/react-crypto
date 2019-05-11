@@ -1,17 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useReducer } from 'react';
+import context, { initialState } from '../../store/store';
 import { PaginationContainer, PaginationButton } from '../styles/styles';
-import PageContext from '../../store/store';
+import reducer, { setNextPage, setPrevPage } from '../../store/reducer';
 
 export default () => {
-  const { currentPage, setCurrentPage } = useContext(PageContext);
+  const { currentPage, nextPage, prevPage } = useContext(context);
 
   return (
     <PaginationContainer>
       {currentPage !== 1 && (
-        <PaginationButton onClick={setCurrentPage}>&larr;</PaginationButton>
+        <PaginationButton onClick={prevPage}>&larr;</PaginationButton>
       )}
       {currentPage !== 5 && (
-        <PaginationButton onClick={setCurrentPage}>&rarr;</PaginationButton>
+        <PaginationButton onClick={nextPage}>&rarr;</PaginationButton>
       )}
     </PaginationContainer>
   );

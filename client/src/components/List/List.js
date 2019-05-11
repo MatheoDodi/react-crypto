@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useReducer, Fragment } from 'react';
-import PageContext, { initialState } from '../../store/store';
-import { NEXT_PAGE } from '../../store/types';
+import context, { initialState } from '../../store/store';
 import ListItem from './ListItem/ListItem';
 import Pagination from '../Pagination/Pagination';
 import Loading from '../Loading/Loading';
@@ -12,11 +11,13 @@ import {
   TableTh,
   TableBody
 } from '../styles/styles';
-import reducer from '../../store/reducer';
+import reducer, {
+  setNextPage,
+  setPrevPage,
+  setCurrencies
+} from '../../store/reducer';
 
 export default () => {
-  const [loading, setLoading] = useState(true);
-  const [currencies, setCurrencies] = useState([]);
   const [error, setError] = useState(null);
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -28,20 +29,13 @@ export default () => {
           `${API_URL}/cryptocurrencies?page=${state.currentPage}&perPage=20`
         );
         const data = await response.json();
-        setCurrencies(data.currencies);
-        setLoading(false);
+        setCurrencies(dispatch, data.currencies);
+        console.log(state);
       } catch (err) {
         setError(err);
-        setLoading(false);
       }
     })();
   }, [state.currentPage]);
-
-  const setCurrentPage = () => {
-    dispatch({
-      type: NEXT_PAGE
-    });
-  };
 
   if (loading) {
     return <Loading />;
@@ -49,10 +43,11 @@ export default () => {
 
   return (
     <Fragment>
-      <PageContext.Provider
+      <context.Provider
         value={{
           currentPage: state.currentPage,
-          setCurrentPage
+          nextPage: () => setNextPage(dispatch),
+          prevPage: () => setPrevPage(dispatch)
         }}
       >
         <TableContainer>
@@ -66,12 +61,12 @@ export default () => {
               </tr>
             </TableHead>
             <TableBody>
-              <ListItem currencies={currencies} />
+              <ListItem currencies={state.currencies} />
             </TableBody>
           </Table>
         </TableContainer>
         <Pagination currentPage={state.currentPage} />
-      </PageContext.Provider>
+      </context.Provider>
     </Fragment>
   );
 };

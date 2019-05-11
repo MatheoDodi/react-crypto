@@ -1,5 +1,4 @@
 import React from 'react';
-import { initialState } from '../../store/store';
 
 import Navbar from '../Navbar/Navbar';
 import List from '../List/List';
