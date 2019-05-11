@@ -5,7 +5,18 @@ import logo from '../../assets/images/logo.svg';
 export default function() {
   return (
     <Header>
-      <Logo src={logo} />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          fontSize: '2rem',
+          margin: 0
+        }}
+      >
+        CRYPT
+        <Logo src={logo} />
+      </div>
     </Header>
   );
 }

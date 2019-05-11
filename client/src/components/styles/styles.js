@@ -36,7 +36,8 @@ export const Header = styled.nav`
 `;
 
 export const Logo = styled.img`
-  width: 75px;
+  width: 48px;
+  margin-left: -11px;
   @media screen and (max-width: 700px) {
     display: none;
   }
