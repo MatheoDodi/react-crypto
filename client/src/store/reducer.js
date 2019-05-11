@@ -1,4 +1,11 @@
-import { NEXT_PAGE, PREV_PAGE, SET_CURRENCIES } from './types';
+import {
+  NEXT_PAGE,
+  PREV_PAGE,
+  SET_CURRENCIES,
+  SET_LOADING,
+  UNSET_LOADING
+} from './types';
+import { API_URL } from '../utils/API';
 
 let reducer = (state, action) => {
   switch (action.type) {
@@ -15,7 +22,17 @@ let reducer = (state, action) => {
     case SET_CURRENCIES:
       return {
         ...state,
-        currencies: action.payload.currencies
+        currencies: action.payload
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
+    case UNSET_LOADING:
+      return {
+        ...state,
+        loading: false
       };
     default:
       return state;
@@ -36,10 +53,32 @@ export const setPrevPage = dispatch => {
   });
 };
 
-export const setCurrencies = (dispatch, currencies) => {
+export const getCurrencies = async currentPage => {
+  return fetch(`${API_URL}/cryptocurrencies?page=${currentPage}&perPage=20`);
+};
+
+export const setCurrencies = async (dispatch, currentPage) => {
+  setLoading(dispatch);
+  const response = await getCurrencies(currentPage);
+  const data = await response.json();
+  const currencies = data.currencies;
+  unsetLoading(dispatch);
+
   dispatch({
     type: SET_CURRENCIES,
     payload: currencies
+  });
+};
+
+export const setLoading = dispatch => {
+  dispatch({
+    type: SET_LOADING
+  });
+};
+
+export const unsetLoading = dispatch => {
+  dispatch({
+    type: UNSET_LOADING
   });
 };
 

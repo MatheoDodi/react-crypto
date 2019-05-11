@@ -1,7 +1,6 @@
-import React, { useContext, useReducer } from 'react';
-import context, { initialState } from '../../store/store';
+import React, { useContext } from 'react';
+import context from '../../store/store';
 import { PaginationContainer, PaginationButton } from '../styles/styles';
-import reducer, { setNextPage, setPrevPage } from '../../store/reducer';
 
 export default () => {
   const { currentPage, nextPage, prevPage } = useContext(context);

@@ -3,7 +3,6 @@ import context, { initialState } from '../../store/store';
 import ListItem from './ListItem/ListItem';
 import Pagination from '../Pagination/Pagination';
 import Loading from '../Loading/Loading';
-import { API_URL } from '../../utils/API';
 import {
   TableContainer,
   Table,
@@ -19,23 +18,14 @@ import reducer, {
 
 export default () => {
   const [error, setError] = useState(null);
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [{ loading, currentPage, currencies }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   useEffect(() => {
-    (async function() {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `${API_URL}/cryptocurrencies?page=${state.currentPage}&perPage=20`
-        );
-        const data = await response.json();
-        setCurrencies(dispatch, data.currencies);
-        console.log(state);
-      } catch (err) {
-        setError(err);
-      }
-    })();
-  }, [state.currentPage]);
+    setCurrencies(dispatch, currentPage);
+  }, [currentPage]);
 
   if (loading) {
     return <Loading />;
@@ -45,7 +35,7 @@ export default () => {
     <Fragment>
       <context.Provider
         value={{
-          currentPage: state.currentPage,
+          currentPage: currentPage,
           nextPage: () => setNextPage(dispatch),
           prevPage: () => setPrevPage(dispatch)
         }}
@@ -61,11 +51,11 @@ export default () => {
               </tr>
             </TableHead>
             <TableBody>
-              <ListItem currencies={state.currencies} />
+              <ListItem currencies={currencies} />
             </TableBody>
           </Table>
         </TableContainer>
-        <Pagination currentPage={state.currentPage} />
+        <Pagination currentPage={currentPage} />
       </context.Provider>
     </Fragment>
   );
