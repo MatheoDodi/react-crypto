@@ -121,4 +121,78 @@ export const PaginationButton = styled.button`
   }
 `;
 
-export const PaginationInfo = styled;
+export const Overlay = styled.div`
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 10;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const DetailContainer = styled.div`
+  position: relative;
+  z-index: 12;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  padding: 0 60px;
+  min-height: 50px;
+  transition: all 0.5s;
+`;
+
+export const DetailHeading = styled.div`
+  font-size: 24px;
+  font-weight: 300;
+  margin-bottom: 3rem;
+`;
+
+export const DetailBody = styled.div`
+  background-color: #081826;
+  min-height: 50px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 30px;
+  padding: 40px 40px 0;
+  border-radius: 4px;
+  box-shadow: 0px 0px 15px 0px #193d5e;
+  transition: all 0.5s;
+`;
+
+export const DetailItem = styled.div`
+  margin-bottom: 50px;
+`;
+
+export const DetailValue = styled.span`
+  border-radius: 20px;
+  background-color: #1f364d;
+  font-size: 14px;
+  padding: 8px 12px;
+  margin-left: 10px;
+`;
+
+export const DetailTile = styled.span`
+  display: block;
+  color: #9cb3c9;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+export const DetailDollar = styled.span`
+  color: #9cb3c9;
+  margin-right: 6px;
+`;
+
+export const SearchContainer = styled.div`
+  position: relative;
+  width: 30%;
+  height: 35px;
+  margin: 0 auto;
+  padding: 0 20px;
+`;

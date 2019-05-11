@@ -13,15 +13,17 @@ import {
 import reducer, {
   setNextPage,
   setPrevPage,
-  setCurrencies
+  setCurrencies,
+  closeModal,
+  showModal
 } from '../../store/reducer';
+import DetailedItem from '../DetailedItem/DetailedItem';
 
 export default () => {
-  const [error, setError] = useState(null);
-  const [{ loading, currentPage, currencies }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [
+    { loading, currentPage, currencies, showDetailedModal, currencySelected },
+    dispatch
+  ] = useReducer(reducer, initialState);
 
   useEffect(() => {
     setCurrencies(dispatch, currentPage);
@@ -36,10 +38,15 @@ export default () => {
       <context.Provider
         value={{
           currentPage: currentPage,
+          showDetailedModal,
+          currencySelected,
           nextPage: () => setNextPage(dispatch),
-          prevPage: () => setPrevPage(dispatch)
+          prevPage: () => setPrevPage(dispatch),
+          closeModal: () => closeModal(dispatch),
+          showModal: () => showModal(dispatch)
         }}
       >
+        {showDetailedModal && <DetailedItem />}
         <TableContainer>
           <Table>
             <TableHead>
@@ -51,7 +58,10 @@ export default () => {
               </tr>
             </TableHead>
             <TableBody>
-              <ListItem currencies={currencies} />
+              <ListItem
+                currencies={currencies}
+                showModal={id => showModal(dispatch, id)}
+              />
             </TableBody>
           </Table>
         </TableContainer>

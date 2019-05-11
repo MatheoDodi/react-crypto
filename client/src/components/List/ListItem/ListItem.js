@@ -1,9 +1,9 @@
 import React from 'react';
 import { TableTd, Rank, Dollar, TableRow } from '../../styles/styles';
 
-export default ({ currencies }) =>
+export default ({ currencies, showModal }) =>
   currencies.map(currency => (
-    <TableRow key={currency.id}>
+    <TableRow key={currency.id} onClick={e => showModal(currency.id)}>
       <TableTd>
         <Rank>{currency.rank}</Rank>
         {currency.name}
