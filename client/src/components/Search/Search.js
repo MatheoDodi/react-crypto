@@ -8,7 +8,7 @@ const Search = () => {
   const handleChangeInput = e => {
     const query = e.target.value;
     const filteredCncs = filteredCurrencies.filter(currency =>
-      currency.name.includes(query)
+      currency.name.toLowerCase().includes(query)
     );
 
     filterCur(filteredCncs);
