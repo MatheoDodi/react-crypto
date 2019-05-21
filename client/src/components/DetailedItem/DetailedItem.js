@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
-import { API_URL } from '../../utils/API';
 import ReactDOM from 'react-dom';
 import {
   DetailContainer,
@@ -12,13 +11,11 @@ import {
   DetailDollar
 } from '../styles/styles';
 import context from '../../store/store';
-import { getCurrencies, getCurrency } from '../../store/reducer';
+import { getCurrency } from '../../store/reducer';
 import Loading from '../Loading/Loading';
 
 const DetailedItem = () => {
-  const { showDetailedModal, closeModal, currencySelected } = useContext(
-    context
-  );
+  const { closeModal, currencySelected } = useContext(context);
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {

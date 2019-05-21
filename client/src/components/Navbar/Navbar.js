@@ -19,6 +19,7 @@ export default function() {
         CRYPT
         <Logo src={logo} />
       </div>
+
       <Search />
     </Header>
   );
